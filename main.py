@@ -115,7 +115,6 @@ def plot_csvs(output_dir: Path) -> None:
             mode='markers',
             marker=dict(size=8, color='blue'),
             name='Original',
-            hovertemplate='<b>Original</b><br>Lat: %{lat}<br>Lon: %{lon}<extra></extra>'
         ))
         
         # Add perturbed points in red
@@ -125,7 +124,6 @@ def plot_csvs(output_dir: Path) -> None:
             mode='markers',
             marker=dict(size=8, color='red'),
             name='Perturbed',
-            hovertemplate='<b>Perturbed</b><br>Lat: %{lat}<br>Lon: %{lon}<extra></extra>'
         ))
         
         # Update layout with mapbox settings
@@ -143,7 +141,7 @@ def plot_csvs(output_dir: Path) -> None:
         )
         
         figure.show()
-        input(f"Plotted {csv_path.name}. Press Enter to see the next plot...")
+        input(f"Plotted {csv_path.name} ({df.shape[0]} points). Press Enter to see the next plot...")
         
 if __name__ == '__main__':
     args = parser.parse_args()
