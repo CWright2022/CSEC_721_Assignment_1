@@ -20,6 +20,7 @@ PRIVACY_BUDGET = 0.1 #epsilon
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--plot_only', action='store_true')
+parser.add_argument('--pertrub_only', action='store_true')
 
 
 def generate_perturbation(lat: float, long: float) -> tuple[float, float]:
@@ -92,6 +93,7 @@ def process_csvs(input_dir: Path, output_dir: Path) -> None:
                         continue
                     pert_lat, pert_lon = generate_perturbation(lat, lon)
                     writer.writerow([lat, lon, pert_lat, pert_lon])
+                    row_count += 1
         print(f'Wrote {row_count} rows to {out_path}')
 
 def plot_csvs(output_dir: Path) -> None:
@@ -141,12 +143,14 @@ def plot_csvs(output_dir: Path) -> None:
         )
         
         figure.show()
-        input(f"Plotted {csv_path.name}. Press Enter to continue...")
+        input(f"Plotted {csv_path.name}. Press Enter to see the next plot...")
         
 if __name__ == '__main__':
     args = parser.parse_args()
     if args.plot_only:
         plot_csvs(OUTPUT)
+    elif args.pertrub_only:
+        process_csvs(INPUT, OUTPUT)
     else:
         process_csvs(INPUT, OUTPUT)
         plot_csvs(OUTPUT)
